@@ -5,3 +5,4 @@ Alguns deles são:
 - Busca de soluções: DFS,BFS , A*
 - MIN-MAX com heuristica para jogos. Ex: xadrez, reversi.
 - Aprendizado de Máquina: Naive Bayes. artificial-intelligence
+- Redes Neurais utilizando TensorFlow
