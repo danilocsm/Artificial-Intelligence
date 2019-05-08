@@ -44,8 +44,8 @@ def get_accuracy():
     pass
 
 def save_model_weights(model, version):
-
-    file_path = './weights/model_weights-v' + version +'.h5'
+    dir_path = '/home/danilocrgm/Documents/git-repositories/artificial-intelligence/neural-networks/incoming-weight-problem/weights/'
+    file_path = dir_path + 'model_weights-v' + str(version) +'.h5'
     model.save_weights(file_path, save_format='h5')
 
 def get_set(dataset, set_size, ratio_1, ratio_2):
@@ -78,6 +78,8 @@ labels = np.asarray(list(map(map_label_to_vector_form,train_set['incoming'].valu
 
 model = create_model(len(train_set.columns)-1, 2)
 history = train_model(train_set[feats].values, labels, model, 90, 40)
+# version 1 doenst use the race column
+save_model_weights(model, 2)
 # print(history.history['acc'])
 
 version = 1
