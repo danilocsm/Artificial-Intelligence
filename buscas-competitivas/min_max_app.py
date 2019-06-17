@@ -21,10 +21,8 @@ PositionValues = [
 _root = Root(Node(None,None))
 playerTile = ''
 computerTile = ''
-	
 
 def drawBoard(board):
-	# Essa funcao desenha o tabuleiro
 	HLINE = '  +---+---+---+---+---+---+---+---+'
 	VLINE = '  |   |   |   |   |   |   |   |   |'
 
@@ -41,7 +39,6 @@ def drawBoard(board):
 		print(HLINE)
 
 def resetBoard(board):
-	#Essa funcao esvazia o tabuleiro
 	for x in range(8):
 		for y in range(8):
 			board[x][y] = ' '
@@ -52,7 +49,6 @@ def resetBoard(board):
 	board[4][4] = 'X'
 
 def getNewBoard():
-	# Criar um tabuleiro novo
 	board = []
 	for i in range(8):
 		board.append([' '] * 8)
@@ -63,7 +59,7 @@ def isValidMove(board, tile, xstart, ystart):
 	# Se o movimento é valido, retorna uma lista de casas que devem ser viradas após o movimento
 	if board[xstart][ystart] != ' ' or not isOnBoard(xstart, ystart):
 		return False
-	board[xstart][ystart] = tile 
+	board[xstart][ystart] = tile
 	if tile == 'X':
 		otherTile = 'O'
 	else:
@@ -96,20 +92,17 @@ def isValidMove(board, tile, xstart, ystart):
 	if len(tilesToFlip) == 0:
 		return False
 	return tilesToFlip
- 
+
 def isOnBoard(x, y):
-	# Retorna True se a casa está no tabuleiro.
 	return x >= 0 and x <= 7 and y >= 0 and y <=7
 
 def getBoardWithValidMoves(board, tile):
-	# Retorna um tabuleiro com os movimentos validos
 	dupeBoard = getBoardCopy(board)
 	for x, y in getValidMoves(dupeBoard, tile):
 		dupeBoard[x][y] = '.'
 	return dupeBoard
 
 def getValidMoves(board, tile):
-	# Retorna uma lista de movimentos validos
 	validMoves = []
 	for x in range(8):
 		for y in range(8):
@@ -119,7 +112,6 @@ def getValidMoves(board, tile):
 
 # HEURISTICA FRACA. Utiliza apenas a qnt de pontos por jogadas sem avaliar nenhuma outra situação
 def getScoreOfBoard(board):
-	# Determina o score baseado na contagem de 'X' e 'O'.
 	xscore = 0
 	oscore = 0
 	for x in range(8):
@@ -131,7 +123,6 @@ def getScoreOfBoard(board):
 	return {'X':xscore, 'O':oscore}
 
 def enterPlayerTile():
-	# Permite que o player escolha ser X ou O
 	tile = ''
 	while not (tile == 'X' or tile == 'O'):
 		print('Escolha suas peças: X ou O?')
@@ -142,20 +133,16 @@ def enterPlayerTile():
 	  return ['O', 'X']
 
 def whoGoesFirst():
-	# Escolhe aleatóriamente quem começa.
 	if random.randint(0, 1) == 0:
 		return 'computer'
 	else:
 		return 'player'
 
 def playAgain():
-	# Retorna True se o player quer jogar novamente
 	print('Quer jogar novamente? (yes ou no)')
 	return input().lower().startswith('y')
 
 def makeMove(board, tile, xstart, ystart):
-	# Coloca a peça no tabuleiro em xstart, ystart, e as peças do oponente
-	# Retorna False se for um movimento invalido
 	tilesToFlip = isValidMove(board, tile, xstart, ystart)
 	if tilesToFlip == False:
 		return False
@@ -165,7 +152,6 @@ def makeMove(board, tile, xstart, ystart):
 	return True
 
 def getBoardCopy(board):
-	# Faz uma cópia do tabuleiro e retorna a cópia
 	dupeBoard = getNewBoard()
 	for x in range(8):
 		for y in range(8):
@@ -173,11 +159,9 @@ def getBoardCopy(board):
 	return dupeBoard
 
 def isOnCorner(x, y):
-	# Retorna True se a posição x, y é um dos cantos do tabuleiro
 	return (x == 0 and y == 0) or (x == 7 and y == 0) or (x == 0 and y == 7) or (x == 7 and y == 7)
 
 def getPlayerMove(board, playerTile):
-	# Permite que o player insira sua jogada
 	DIGITS1TO8 = '1 2 3 4 5 6 7 8'.split()
 	while True:
 		print('Insira seu movimento, ou insira quit para sair do jogo, ou hints para ativar/desativar dicas.')
@@ -200,9 +184,7 @@ def getPlayerMove(board, playerTile):
 	return [x, y]
 
 def getComputerMove(board, computerTile):
-	# Permite ao computador executar seu movimento
 	possibleMoves = getValidMoves(board, computerTile)
-	# randomiza a ordem dos possíveis movimentos
 	random.shuffle(possibleMoves)
 	# se for possivel, joga no canto
 	for x, y in possibleMoves:
@@ -220,7 +202,6 @@ def getComputerMove(board, computerTile):
 	return bestMove
 
 def showPoints(playerTile, computerTile, mainBoard):
-	# Mostra o score atual
 	scores = getScoreOfBoard(mainBoard)
 	print('Player1: %s ponto(s). \nComputador: %s ponto(s).' % (scores[playerTile], scores[computerTile]))
 
@@ -236,13 +217,13 @@ def my_heuristic(board):
 
 	global playerTile
 	global computerTile
-	
+
 	# variaveis que vão guardar o valor de cada heuristica
 	p,c,l,m,f,d = [0]*6
 
 	player_tiles , computer_tiles = 0,0
 	comp_front_tiles, player_front_tiles = 0,0
-	
+
 	X1 = [-1,-1,0,1,1,1,0,-1]
 	Y1 = [0,1,1,1,0,-1,-1,-1]
 
@@ -296,21 +277,21 @@ def my_heuristic(board):
 	computer_tiles = 0
 	player_tiles = 0
 
-	if(board[0][0] == computerTile): 
+	if(board[0][0] == computerTile):
 		computer_tiles += 1
 	elif(board[0][0] == playerTile):
 		player_tiles += 1
-	if(board[0][7] == computerTile): 
+	if(board[0][7] == computerTile):
 		computer_tiles += 1
-	elif(board[0][7] == playerTile): 
+	elif(board[0][7] == playerTile):
 		player_tiles += 1
-	if(board[7][0] == computerTile): 
+	if(board[7][0] == computerTile):
 		computer_tiles += 1
-	elif(board[7][0] == playerTile): 
+	elif(board[7][0] == playerTile):
 		player_tiles += 1
-	if(board[7][7] == computerTile): 
+	if(board[7][7] == computerTile):
 		computer_tiles += 1
-	elif(board[7][7] == playerTile): 
+	elif(board[7][7] == playerTile):
 		player_tiles += 1
 	c = 25 * (computer_tiles - player_tiles)
 
@@ -332,7 +313,7 @@ def my_heuristic(board):
 			 computer_tiles += 1
 		elif(board[1][0] == playerTile):
 			 player_tiles += 1
-	
+
 	if(board[0][7] == ' '):
 		if(board[0][6] == computerTile):
 			 computer_tiles += 1
@@ -346,7 +327,7 @@ def my_heuristic(board):
 			 computer_tiles += 1
 		elif(board[1][7] == playerTile):
 			 player_tiles += 1
-	
+
 	if(board[7][0] == ' '):
 		if(board[7][1] == computerTile):
 			 computer_tiles += 1
@@ -360,7 +341,7 @@ def my_heuristic(board):
 			 computer_tiles += 1
 		elif(board[6][0] == playerTile):
 			 player_tiles += 1
-	
+
 	if(board[7][7] == ' '):
 		if(board[6][7] == computerTile):
 			 computer_tiles += 1
@@ -374,7 +355,7 @@ def my_heuristic(board):
 			 computer_tiles += 1
 		elif(board[7][6] == playerTile):
 			 player_tiles += 1
-	
+
 	l = -12.5 * (computer_tiles - player_tiles)
 
 	# Mobility
@@ -399,26 +380,17 @@ def my_max(root,depth):
 	global best_node
 	auxMove = None
 
-	# verificia se chegou em uma folha ou atingiu a profundidade maxima
 	if root.childs == None or depth == 0:
-
 		return root.data[1]
-
-	v = None	
-		
-	# laço para retornar o maior valor entre os filhos na camada 
+	v = None
 	for child in root.childs:
-		#print("v = {0}".format(v))
-		#print(child.data)
 		auxV = my_min(child,depth-1)
-		#print("auxV = {0}".format(auxV))
 		if v == None:
 			v = auxV
 			auxMove = child.data[2]
 		elif auxV > v:
 			v = auxV
 			auxMove = child.data[2]
-
 	best_node = auxMove
 
 	return v
@@ -427,39 +399,25 @@ def my_min(root,depth):
 
 	global best_node
 	auxMove = None
-	#print("DEPTH = {}".format(depth))
-	# verificia se chegou em uma folha ou atingiu a profundidade maxima
 	if root.childs == None or depth == 0:
-
 		return root.data[1]
-
-
 	v = None
-	# laço para retornar o menor valor entre os filhos na camada 
 	for child in root.childs:
-		#print("v = {0}".format(v))
-
-		#print(child.data)
 		auxV = my_max(child,depth-1)
-		#print("auxV = {0}".format(auxV))
 		if v == None:
 			v = auxV
 			auxMove = child.data[2]
 		elif auxV < v:
 			v = auxV
 			auxMove = child.data[2]
-			
-
 	best_node = auxMove
 
 	return v
 
-# funçao auxiliar que executa o algoritmo MINMAX
 def minmax(root):
 
 	global best_node
 	my_max(root,5)
-
 	return best_node
 
 # funçao que irá, em conjunto com a funçao constroyAllMoves, construir a árvore
@@ -470,8 +428,6 @@ def initializeTree(root,board):
 	# inicializa a raiz com o estado atual do tabuleiro
 	dupeBoard = getBoardCopy(board)
 	root.data = (dupeBoard,0)
-
-	# constroi a partir da raiz estabelecida todas as possiveis jogadas até uma profundidade 5
 	constroyAllMoves(root,board,computerTile,5)
 
 def constroyAllMoves(root,board,tile,max_depth):
@@ -479,68 +435,51 @@ def constroyAllMoves(root,board,tile,max_depth):
 	global playerTile
 	global computerTile
 	global PositionValues
-
 	initialMoves = getValidMoves(board, tile)
-		
 	aux = root
-	# verifica se existem movimentos
 	if initialMoves != []:
-		# gera todos os possiveis estados sucessores para o nó em questão
 		while initialMoves:
-
-			#print("TURNO DO {0}".format(tile))
-			#print("PROFUNDIDADE {0}".format(max_depth))
 			dupeBoard = getBoardCopy(board)
 			x,y = initialMoves.pop(0)
 			makeMove(dupeBoard,tile,x,y)
 			score = my_heuristic(dupeBoard)
-			#drawBoard(dupeBoard)
 			aux.insert_childs((dupeBoard,score,[x,y]))
-		max_depth -= 1		
-		#verifica se ainda é possivel descer na arvore
-		if max_depth>0:	
-			# escolhe quem gerará os tabuleiros do próximo nivel
+		max_depth -= 1
+		if max_depth>0:
 			if max_depth % 2 == 1:
 				turn_tile =  computerTile
 			else:
 				turn_tile = playerTile
-			# gera os filhos dos filhos até a profundidade máxima ser atingida
 			for i in range(0,len(root.childs)):
 				constroyAllMoves(root.childs[i],root.childs[i].data[0],turn_tile,max_depth)
 
-# funçao que apenas retornar o movimento da rodada		
 def getComputerMoveMINMAX(root,board):
-	
+
 	'''
 	global computerTile
 	possibleMoves = getValidMoves(board,computerTile)
 	for x, y in possibleMoves:
 		if [x,y] in best_moves:
-			return [x,y]	
+			return [x,y]
 	'''
 	move = minmax(root)
 	return move
-#####################################################################################################
 
 def start_game():
 	print('Welcome to Reversi!')
-	
+
 	global playerTile
 	global computerTile
 	global _root
 	global best_moves
 
 	while True:
-		# Reseta o jogo e o tabuleiro
 		mainBoard = getNewBoard()
 		resetBoard(mainBoard)
 		playerTile, computerTile = enterPlayerTile()
 		showHints = False
 		turn = whoGoesFirst()
 		print('O ' + turn + ' começa o jogo.')
-		#_root.root.walk_on_tree()
-		#print(moves_graph)
-		
 		while True:
 			if turn == 'player':
 				# Player's turn.
@@ -568,8 +507,6 @@ def start_game():
 				drawBoard(mainBoard)
 				showPoints(playerTile, computerTile,mainBoard)
 				input('Pressione Enter para ver a jogada do computador.')
-		
-			 	
 				initializeTree(_root.root,mainBoard)
 				x, y = getComputerMoveMINMAX(_root.root,mainBoard)
 				makeMove(mainBoard, computerTile, x, y)
@@ -592,5 +529,4 @@ def start_game():
 			break
 
 if __name__ == "__main__":
-
 	start_game()

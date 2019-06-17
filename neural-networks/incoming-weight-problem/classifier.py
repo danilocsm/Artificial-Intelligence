@@ -3,8 +3,8 @@
 # 2 - Model Save
 # 3 - RandomSearch
 
-import pandas as pd 
-import numpy as np 
+import pandas as pd
+import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
 import os
@@ -35,10 +35,10 @@ def train_model(dataset, labels, model, epochs, batch_size):
 
     history = model.fit(
         dataset,
-        labels, 
-        epochs=epochs, 
+        labels,
+        epochs=epochs,
         batch_size=batch_size)
-    return history 
+    return history
 
 def get_accuracy():
     pass
@@ -86,7 +86,7 @@ version = 1
 
 # print(dataset[dataset['incoming'] == 1].count())
 # print(dataset[dataset['incoming'] == 0].count())
-# train_set, test_set = split_data_into_train_test_sets(dataset) 
+# train_set, test_set = split_data_into_train_test_sets(dataset)
 # model = create_model()
 # model = train_model(train_set)
 # predicted_data = classify_data(test_set)

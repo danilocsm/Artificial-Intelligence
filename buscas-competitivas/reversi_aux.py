@@ -6,7 +6,7 @@ from random import randint
 class Node:
 
 	def __init__(self,data,childs):
-		
+
 		self.data = data
 		#self.father = father
 		self.childs = childs
@@ -16,7 +16,7 @@ class Node:
 
 		if self.childs == None:
 			self.childs = []
-		
+
 	def insert_childs(self,data):
 
 		self.create_list()
@@ -24,12 +24,12 @@ class Node:
 		self.childs.append(aux)
 		'''
 	def walk_on_tree(self):
-		
+
 		if self != None:
 			#print("Data: {0}\nFather: {1}\nChild Len: {2}".format(self.data,self.father,len(self.childs)))
 			if self.childs != None:
 				print("Data: {0}\nFather: {1}\nChild Len: {2}".format(self.data,self.father,len(self.childs)))
-			
+
 				for node in self.childs:
 
 					node.walk_on_tree()
@@ -57,7 +57,7 @@ aux.insert_childs(root,4)
 aux.insert_childs(root,5)
 aux.insert_childs(root,6)
 for node in aux.childs:
-	
+
 	node.insert_childs(node,i)
 	i += 1
 
@@ -78,8 +78,8 @@ def my_max(root,depth):
 
 		return root.data
 
-	v = None	
-		
+	v = None
+
 	for child in root.childs:
 		print("v = {0}".format(v))
 		#print(child.data)
@@ -107,7 +107,7 @@ def my_min(root,depth):
 
 
 	v = None
-		
+
 	for child in root.childs:
 		print("v = {0}".format(v))
 
@@ -120,7 +120,7 @@ def my_min(root,depth):
 		elif auxV < v:
 			v = auxV
 			auxMove = child
-			
+
 
 	best_node = auxMove
 
@@ -141,7 +141,7 @@ def generate_numbers():
 
 		output.append(randint(randint(1,10),randint(100,100)))
 
-	return output		
+	return output
 
 
 h = 5
@@ -157,7 +157,7 @@ def create_tree(root):
 		root.insert_childs(root,num)
 
 	h -= 1
-	if h>0:	 
+	if h>0:
 		for i in range(0,len(root.childs)):
 
 			create_tree(root.childs[i])

@@ -1,5 +1,5 @@
 import os
-import pandas as pd 
+import pandas as pd
 
 def min_max_normalization(dataframe, column):
 
@@ -7,7 +7,7 @@ def min_max_normalization(dataframe, column):
 
         new_value = (value - min_value) / (max_value - min_value)
         return new_value
-    
+
     min_value = dataframe[column].min()
     max_value = dataframe[column].max()
     dataframe[column] = dataframe[column].apply(apply_min_max)
@@ -15,17 +15,17 @@ def min_max_normalization(dataframe, column):
     return dataframe
 
 def map_categorical_to_discrete_values(dataframe, column):
-     
+
     def aux_map_function(value):
 
         return values_dic[value]
-    
+
     unique_values = dataframe[column].unique()
     values_dic = dict(zip(unique_values,range(len(unique_values))))
     dataframe[column] = dataframe[column].apply(aux_map_function)
 
     return dataframe
-   
+
 def remove_missing_values(dataframe):
 
     workclass_mode = dataframe['workclass'].mode()[0]
@@ -41,13 +41,13 @@ def get_means(bins):
     for i in range(len(bins)-1):
         mean = (bins[i]+bins[i+1]) // 2
         means.append(mean)
-    
+
     return means
 
 def discrete_ages(dataframe):
-    
+
     def discretize_age_into_interval_mean(age):
-        
+
         for mean, interval in interval_mean_dic.items():
             if age in interval:
                 return mean
@@ -65,9 +65,9 @@ def discrete_ages(dataframe):
     return dataframe
 
 def preprocess_data(dataframe):
-    
+
     categorical_features = ['sex','workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'incoming']
-    
+
     # removing missing values in workclass and occupation columns
     dataframe = remove_missing_values(dataframe)
 
@@ -86,10 +86,10 @@ def preprocess_data(dataframe):
     for column in columns:
         dataframe = min_max_normalization(dataframe, column)
 
-    return dataframe 
+    return dataframe
 
 if __name__ == "__main__":
-    
+
     dataset_dir = '/home/danilocrgm/Documents/datasets/adults-dataset/adult.csv'
     raw_dataframe = pd.read_csv(dataset_dir)
 
